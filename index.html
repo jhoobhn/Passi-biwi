@@ -17,15 +17,6 @@
       40% {transform: translateY(-20px);}
       60% {transform: translateY(-10px);}
     }
-    .heart-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
   </style>
 </head>
 <body class="gradient-background overflow-hidden">
@@ -33,22 +24,18 @@
     <source src="https://www.myinstants.com/media/sounds/titanic-theme-song.mp3" type="audio/mpeg">
   </audio>
 
-  <div class="heart-bg" id="heartContainer"></div>
-
   <div class="flex items-center justify-center h-screen relative z-10">
-    <div class="flex flex-col items-center p-8 bg-white/30 backdrop-blur-md rounded-3xl shadow-2xl border border-white/20 text-center max-w-md mx-4">
+    <div class="flex flex-col items-center p-8 bg-white/40 backdrop-blur-lg rounded-3xl shadow-2xl text-center max-w-md mx-4 border border-white/20">
       
-      <img id="imageDisplay" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute bear" class="rounded-2xl h-[250px] w-full object-cover mb-6 shadow-lg" />
+      <img id="imageDisplay" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXByZ3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute bear" class="rounded-2xl h-[250px] w-full object-cover mb-6 shadow-md" />
       
-      <h2 id="valentineQuestion" class="text-3xl font-extrabold italic text-[#be185d] leading-tight">Will you be my Valentine, Arshama urff passi? ❤️</h2>
+      <h2 id="valentineQuestion" class="text-3xl font-extrabold italic text-[#be185d]">Will you be my Valentine, Arshama passi ? ❤️</h2>
       
-      <p id="romanticText" class="text-pink-800 mt-4 italic hidden">"My heart will go on for you..."</p>
-
       <div class="flex gap-4 pt-[30px] items-center" id="responseButtons">
-        <button id="yesButton" class="bounce inline-flex items-center justify-center rounded-full text-[20px] font-bold bg-[#ff1e56] text-white px-8 py-3 shadow-lg hover:bg-[#ff4d6d] transition-all duration-300">
+        <button id="yesButton" class="bounce inline-flex items-center justify-center rounded-full text-[20px] font-bold bg-[#ff1e56] text-white px-8 py-3 shadow-lg hover:scale-110 transition-all duration-300">
           Yes! 💖
         </button>
-        <button id="noButton" class="inline-flex items-center justify-center rounded-full text-[18px] font-medium bg-white text-[#ff1e56] px-6 py-2 shadow-md hover:bg-gray-100 transition-all duration-300 border border-pink-200">
+        <button id="noButton" class="inline-flex items-center justify-center rounded-full text-[18px] font-medium bg-white text-[#ff1e56] px-6 py-2 shadow-sm border border-pink-200">
           No 😢
         </button>
       </div>
@@ -63,22 +50,19 @@
     const imageDisplay = document.getElementById('imageDisplay');
     const valentineQuestion = document.getElementById('valentineQuestion');
     const responseButtons = document.getElementById('responseButtons');
-    const romanticText = document.getElementById('romanticText');
     const music = document.getElementById('bgMusic');
   
     let noClickCount = 0;
     let yesSize = 20;
-    let paddingX = 32; 
-    let paddingY = 12;
 
+    // Guaranteed working images for each "No" click
     const images = [
-      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif",
+      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXByZ3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif",
       "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/OPU6wUKqz3Fry/giphy.gif",
-      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/26hpKz78Y9m/giphy.gif",
-      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/7SF5scGB2AFrO/giphy.gif"
+      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/26hpKz78Y9m/giphy.gif"
     ];
 
-    const messages = ["No", "Are you sure, Arshama?", "Pookie please...", "You're breaking my heart :(", "Arshama (Passi biwi), please! ❤️"];
+    const messages = ["No", "Are you sure, Arshama?", "Pookie please...", "Don't do this to me :("];
   
     noButton.addEventListener('click', () => {
       if (noClickCount < messages.length - 1) {
@@ -87,29 +71,20 @@
         imageDisplay.src = images[noClickCount % images.length];
         
         // Grow the Yes button
-        yesSize += 25;
-        paddingX += 20;
-        paddingY += 10;
+        yesSize += 35;
         yesButton.style.fontSize = `${yesSize}px`;
-        yesButton.style.padding = `${paddingY}px ${paddingX}px`;
+        yesButton.style.padding = `${yesSize/2}px ${yesSize}px`;
       }
     });
   
     yesButton.addEventListener('click', () => {
-      // Romantic Finale
+      // Romantic Final Content
       imageDisplay.src = 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/l41lH4ADRtAYnGsLe/giphy.gif';
-      valentineQuestion.innerHTML = "Yayyy!! I love you Arshama! ❤️<br><span class='text-xl mt-4 block'>You've made me the happiest person in the world!</span>";
-      romanticText.classList.remove('hidden');
+      valentineQuestion.innerHTML = "Yayyy!! I love you Arshama! ❤️<br><span class='text-xl mt-4 block'>You've made me the happiest person ever!</span>";
       responseButtons.style.display = 'none';
       
-      // Effects
-      confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#ff1e56', '#ffafbd', '#ffffff']
-      });
-      music.play();
+      confetti();
+      music.play(); // Titanic song plays on "Yes"
     });
   </script>  
 </body>
