@@ -42,7 +42,7 @@
     </div>
   </div>
 
-  <script type="module">
+<script type="module">
     import confetti from 'https://cdn.skypack.dev/canvas-confetti';
     
     const yesButton = document.getElementById('yesButton');
@@ -55,7 +55,6 @@
     let noClickCount = 0;
     let yesSize = 20;
 
-    // Fixed the links and removed the extra "https:/" that was breaking it
     const images = [
       "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXByZ3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif",
       "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGozMW11aWg5dnNoeTRpdWRsam9tcXBoMzVldHkyNjN5d3YwYTJ1MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l1KVaj5UcbHwrBMqI/giphy.gif",
@@ -70,7 +69,6 @@
         noButton.textContent = messages[noClickCount];
         imageDisplay.src = images[noClickCount % images.length];
         
-        // Grow the Yes button
         yesSize += 35;
         yesButton.style.fontSize = `${yesSize}px`;
         yesButton.style.padding = `${yesSize/2}px ${yesSize}px`;
@@ -78,11 +76,16 @@
     });
   
     yesButton.addEventListener('click', () => {
-      // Changed to a working romantic GIF
-      imageDisplay.src = 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3NnZ3NnZ3NnZ3NnZ3NnZ3NnZ3NnZ3NnZ3NnZ3NnZ3NnZ3NnZnd3JmVwP12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9uH9mbXos8/giphy.gif';
-      valentineQuestion.innerHTML = "Yayyy!! I love you Arshama! ❤️<br><span class='text-xl mt-4 block'>You've made me the happiest person ever!</span>";
-      responseButtons.style.display = 'none';
+      // 1. Updated to a very reliable, high-quality romantic bear hug GIF
+      imageDisplay.src = 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZleHh3Y3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/l41lH4ADRtAYnGsLe/giphy.gif';
       
+      // 2. Updated the text with a more romantic style
+      valentineQuestion.innerHTML = "Yayyy!! I love you Arshama! ❤️<br><span style='font-size: 1.5rem; display: block; margin-top: 10px; color: #ff1e56;'>You've made me the happiest person ever!</span>";
+      
+      // 3. Completely clear the buttons to make space for the message
+      responseButtons.innerHTML = ""; 
+      
+      // 4. Effects
       confetti();
       music.play();
     });
