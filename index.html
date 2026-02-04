@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .gradient-background {
-      background: linear-gradient(180deg, #ffdae9 0%, #fee2fe 100%);
+      background: linear-gradient(180deg, #ffafbd 0%, #ffc3a0 100%);
     }
     .bounce {
       animation: bounce 2s infinite;
@@ -17,25 +17,39 @@
       40% {transform: translateY(-20px);}
       60% {transform: translateY(-10px);}
     }
+    .heart-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
   </style>
 </head>
-<body class="gradient-background">
+<body class="gradient-background overflow-hidden">
   <audio id="bgMusic" loop>
     <source src="https://www.myinstants.com/media/sounds/titanic-theme-song.mp3" type="audio/mpeg">
   </audio>
 
-  <div class="flex items-center justify-center h-screen">
-    <div class="flex flex-col items-center p-4 text-center">
-      <img id="imageDisplay" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXByZ3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute bear" class="rounded-md h-[300px] object-cover" />
+  <div class="heart-bg" id="heartContainer"></div>
+
+  <div class="flex items-center justify-center h-screen relative z-10">
+    <div class="flex flex-col items-center p-8 bg-white/30 backdrop-blur-md rounded-3xl shadow-2xl border border-white/20 text-center max-w-md mx-4">
       
-      <h2 id="valentineQuestion" class="text-4xl font-bold italic text-[#bd1e59] my-4">Will you be my Valentine, Arshama? ❤️</h2>
+      <img id="imageDisplay" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute bear" class="rounded-2xl h-[250px] w-full object-cover mb-6 shadow-lg" />
       
-      <div class="flex gap-4 pt-[20px] items-center" id="responseButtons">
-        <button id="yesButton" class="bounce inline-flex items-center justify-center rounded-md text-[20px] font-medium bg-green-500 text-white px-4 py-2 hover:bg-green-400 transition-all">
-          Yes
+      <h2 id="valentineQuestion" class="text-3xl font-extrabold italic text-[#be185d] leading-tight">Will you be my Valentine, Arshama urff passi? ❤️</h2>
+      
+      <p id="romanticText" class="text-pink-800 mt-4 italic hidden">"My heart will go on for you..."</p>
+
+      <div class="flex gap-4 pt-[30px] items-center" id="responseButtons">
+        <button id="yesButton" class="bounce inline-flex items-center justify-center rounded-full text-[20px] font-bold bg-[#ff1e56] text-white px-8 py-3 shadow-lg hover:bg-[#ff4d6d] transition-all duration-300">
+          Yes! 💖
         </button>
-        <button id="noButton" class="inline-flex items-center justify-center rounded-md text-[20px] font-medium bg-red-500 text-white px-4 py-2 hover:bg-red-700 transition-all">
-          No
+        <button id="noButton" class="inline-flex items-center justify-center rounded-full text-[18px] font-medium bg-white text-[#ff1e56] px-6 py-2 shadow-md hover:bg-gray-100 transition-all duration-300 border border-pink-200">
+          No 😢
         </button>
       </div>
     </div>
@@ -49,43 +63,53 @@
     const imageDisplay = document.getElementById('imageDisplay');
     const valentineQuestion = document.getElementById('valentineQuestion');
     const responseButtons = document.getElementById('responseButtons');
+    const romanticText = document.getElementById('romanticText');
     const music = document.getElementById('bgMusic');
   
     let noClickCount = 0;
     let yesSize = 20;
-    let padding = 15;
+    let paddingX = 32; 
+    let paddingY = 12;
 
-    // List of images for each "No" click
     const images = [
-      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXByZ3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif",
+      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif",
       "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/OPU6wUKqz3Fry/giphy.gif",
       "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/26hpKz78Y9m/giphy.gif",
       "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/7SF5scGB2AFrO/giphy.gif"
     ];
 
-    const messages = ["No", "Are you sure, Arshama?", "Pookie please...", "Don't do this to me :(", "I'm gonna cry..."];
+    const messages = ["No", "Are you sure, Arshama?", "Pookie please...", "You're breaking my heart :(", "Arshama (Passi biwi), please! ❤️"];
   
     noButton.addEventListener('click', () => {
       if (noClickCount < messages.length - 1) {
         noClickCount++;
-        // Update text and image
         noButton.textContent = messages[noClickCount];
         imageDisplay.src = images[noClickCount % images.length];
         
-        // Make Yes button BIGGER
-        yesSize += 30;
-        padding += 15;
+        // Grow the Yes button
+        yesSize += 25;
+        paddingX += 20;
+        paddingY += 10;
         yesButton.style.fontSize = `${yesSize}px`;
-        yesButton.style.padding = `${padding}px`;
+        yesButton.style.padding = `${paddingY}px ${paddingX}px`;
       }
     });
   
     yesButton.addEventListener('click', () => {
+      // Romantic Finale
       imageDisplay.src = 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/l41lH4ADRtAYnGsLe/giphy.gif';
-      valentineQuestion.textContent = "Yayyy!! I love you Arshama! ❤️";
+      valentineQuestion.innerHTML = "Yayyy!! I love you Arshama! ❤️<br><span class='text-xl mt-4 block'>You've made me the happiest person in the world!</span>";
+      romanticText.classList.remove('hidden');
       responseButtons.style.display = 'none';
-      confetti();
-      music.play(); // Titanic music starts here
+      
+      // Effects
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#ff1e56', '#ffafbd', '#ffffff']
+      });
+      music.play();
     });
   </script>  
 </body>
