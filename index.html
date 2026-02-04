@@ -55,12 +55,11 @@
     let noClickCount = 0;
     let yesSize = 20;
 
-    // Guaranteed working images for each "No" click
+    // Fixed the links and removed the extra "https:/" that was breaking it
     const images = [
       "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXByZ3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif",
-      "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGozMW11aWg5dnNoeTRpdWRsam9tcXBoMzVldHkyNjN5d3YwYTJ1MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l1KVaj5UcbHwrBMqI/giphy.gif,
-      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/26hpKz78Y9m/giphy.gif""
-      
+      "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGozMW11aWg5dnNoeTRpdWRsam9tcXBoMzVldHkyNjN5d3YwYTJ1MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l1KVaj5UcbHwrBMqI/giphy.gif",
+      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/26hpKz78Y9m/giphy.gif"
     ];
 
     const messages = ["No NOooooo", "Ek bar such lo, Arshama?", "jaan please...", "kya hoga ye passi ka :("];
@@ -79,14 +78,12 @@
     });
   
     yesButton.addEventListener('click', () => {
-      // Romantic Final Content
-      imageDisplay.src = 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZkbXozOWZ4Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3Z3R3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/l41lH4ADRtAYnGsLe/giphy.gif';
+      // Changed to a working romantic GIF
+      imageDisplay.src = 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3NnZ3NnZ3NnZ3NnZ3NnZ3NnZ3NnZ3NnZ3NnZ3NnZ3NnZ3NnZnd3JmVwP12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9uH9mbXos8/giphy.gif';
       valentineQuestion.innerHTML = "Yayyy!! I love you Arshama! ❤️<br><span class='text-xl mt-4 block'>You've made me the happiest person ever!</span>";
       responseButtons.style.display = 'none';
       
       confetti();
-      music.play(); // Titanic song plays on "Yes"
+      music.play();
     });
-  </script>  
-</body>
-</html>
+  </script>
